@@ -1,0 +1,42 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- Connexion JDBC -->
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/SchoolSwap</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">password12345</property>
+
+        <!-- Dialecte SQL -->
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Afficher les requêtes SQL dans la console -->
+        <property name="show_sql">true</property>
+
+        <!-- Mode de gestion du contexte de session -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Pool de connexions : de type apache DBCP (facultatif si standalone) -->
+        <property name="hibernate.dbcp.initialSize">5</property>
+
+        <!-- Cache : désactivé pour le cours -->
+        <!-- <property name="cache.provider_class">
+        org.hibernate.cache.internal.NoCacheProvider</property> -->
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+        <property name="hibernate.cache.use_query_cache">false</property>
+        <!-- Gestion du schéma -->
+        <!-- validate : vérifie le mapping / update : met à jour / create : recrée à chaque exécution -->
+        <property name="hbm2ddl.auto">validate</property>
+
+        <!-- Mapping des entités -->
+        <!-- <mapping class=""/> -->
+        <mapping class="com.entity.Article"/>
+        <mapping class="com.entity.Categorie" />
+        <mapping class="com.entity.User" />
+
+    </session-factory>
+</hibernate-configuration>
