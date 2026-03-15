@@ -3,8 +3,6 @@ package com.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.management.relation.Role;
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -95,5 +93,9 @@ public class User {
     public void setVille(String ville) {
         this.ville = ville;
     }
+
+    public RoleUser getRole() { return role; }
+
+    public void setRole(RoleUser role) { this.role = role; }
 
 }

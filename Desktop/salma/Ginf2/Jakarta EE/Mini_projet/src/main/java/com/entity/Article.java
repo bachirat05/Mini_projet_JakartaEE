@@ -133,5 +133,8 @@ public class Article {
         this.datePublication = datePublication;
     }
 
+    public EtatArticle getEtat() { return etat; }
+    
+    public void setEtat(EtatArticle etat) { this.etat = etat; }
 
 }
