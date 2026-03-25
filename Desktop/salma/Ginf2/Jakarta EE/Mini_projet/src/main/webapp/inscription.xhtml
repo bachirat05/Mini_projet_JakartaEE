@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+   <h:head>
+      <title>Inscription — SchoolSwap</title>
+      <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css" />
+   </h:head>
+
+   <h:body>
+
+      <!-- Navbar -->
+      <div class="navbar">
+         <a href="index.xhtml" class="navbar-logo">School<span>Swap</span></a>
+         <span class="navbar-link">
+            Déjà inscrit ?
+            <a href="connexion.xhtml" style="color:white; font-weight:700; margin-left:4px;">Se connecter</a>
+         </span>
+      </div>
+
+      <!-- Page layout deux colonnes -->
+      <div class="inscription-layout">
+
+         <!-- Colonne gauche : panneau vert -->
+         <div class="inscription-left">
+            <h2>Rejoins la communauté étudiante</h2>
+            <p>Des centaines d'étudiants échangent déjà leurs livres et matériaux scolaires sur SchoolSwap.</p>
+
+            <div class="feature">
+               <div class="feature-icon">📚</div>
+               <span>Publie tes annonces gratuitement</span>
+            </div>
+            <div class="feature">
+               <div class="feature-icon">🔍</div>
+               <span>Trouve ce dont tu as besoin</span>
+            </div>
+            <div class="feature">
+               <div class="feature-icon">💬</div>
+               <span>Contacte directement les vendeurs</span>
+            </div>
+         </div>
+
+         <!-- Colonne droite : formulaire -->
+         <div class="inscription-right">
+
+            <span class="card-logo">School<span>Swap</span></span>
+            <h3 class="inscription-title">Créer un compte</h3>
+            <p class="card-tagline">Inscription réservée aux étudiants</p>
+
+            <h:form>
+
+               <!-- Ligne Nom / Prénom -->
+               <div class="row">
+                  <div class="field">
+                     <label for="nom">Nom</label>
+                     <h:inputText
+                             id="nom"
+                             value="#{registerBean.nom}"
+                             required="true"
+                             requiredMessage="Le nom est obligatoire"
+                             placeholder="Bachirat" />
+                     <h:message for="nom" styleClass="message-error" />
+                  </div>
+                  <div class="field">
+                     <label for="prenom">Prénom</label>
+                     <h:inputText
+                             id="prenom"
+                             value="#{registerBean.prenom}"
+                             placeholder="Salma" />
+                  </div>
+               </div>
+
+               <!-- Ligne Téléphone / Ville -->
+               <div class="row">
+                  <div class="field">
+                     <label for="telephone">Téléphone</label>
+                     <h:inputText
+                             id="telephone"
+                             value="#{registerBean.telephone}"
+                             required="true"
+                             requiredMessage="Le téléphone est obligatoire"
+                             placeholder="+212 6XX XXX XXX" />
+                     <h:message for="telephone" styleClass="message-error" />
+                  </div>
+                  <div class="field">
+                     <label for="ville">Ville</label>
+                     <h:inputText
+                             id="ville"
+                             value="#{registerBean.ville}"
+                             placeholder="Casablanca" />
+                  </div>
+               </div>
+
+               <!-- Email -->
+               <div class="field">
+                  <label for="email">Email</label>
+                  <h:inputText
+                          id="email"
+                          value="#{registerBean.email}"
+                          required="true"
+                          requiredMessage="L'email est obligatoire"
+                          placeholder="s.bachirat@etu.univ.ma" />
+                  <h:message for="email" styleClass="message-error" />
+               </div>
+
+               <!-- Mot de passe -->
+               <div class="field">
+                  <label for="password">Mot de passe</label>
+                  <h:inputSecret
+                          id="password"
+                          value="#{registerBean.password}"
+                          required="true"
+                          requiredMessage="Le mot de passe est obligatoire"
+                          placeholder="••••••••" />
+                  <h:message for="password" styleClass="message-error" />
+               </div>
+
+               <!-- Bouton -->
+               <h:commandButton
+                       value="Créer mon compte"
+                       action="#{registerBean.register}"
+                       styleClass="btn-submit" />
+
+               <!-- Message général du bean (ex: email déjà utilisé) -->
+               <h:outputText
+                       value="#{registerBean.message}"
+                       styleClass="message-error"
+                       rendered="#{not empty registerBean.message}" />
+
+            </h:form>
+
+            <!-- Lien connexion -->
+            <div class="bottom-links">
+               Déjà inscrit ? <h:link value="Se connecter" outcome="connexion.xhtml" />
+            </div>
+
+         </div>
+      </div>
+
+   </h:body>
+</f:view>
+</html>

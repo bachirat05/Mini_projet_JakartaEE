@@ -3,13 +3,18 @@ package com.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.management.relation.Role;
-
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @ColumnDefault("nextval('users_id_user_seq')")
+    // Pour dire à Hibernates de générer la clé automatiquement
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @SequenceGenerator(
+            name = "users_seq",
+            sequenceName = "users_id_user_seq",
+            allocationSize = 1
+    )
+
     @Column(name = "id_user", nullable = false)
     private Integer id;
 
@@ -32,13 +37,23 @@ public class User {
     private String ville;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", columnDefinition = "role_user")
+    // Ajout de non insertable et non updatable à cause de problèmes d'insertion
+    @Column(name = "role", columnDefinition = "role_user",insertable = false, updatable = false)
     private RoleUser role;
     public enum RoleUser{
         Etudiant,
         Admin
     }
-
+    // Ajout d'un constructeur vide ; important
+    public User() {}
+    public User(String nom, String prenom, String mail, String motdepasse, String telephone, String ville) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.mail = mail;
+        this.motdepasse = motdepasse;
+        this.telephone = telephone;
+        this.ville = ville;
+    }
 
     public Integer getId() {
         return id;
@@ -95,5 +110,9 @@ public class User {
     public void setVille(String ville) {
         this.ville = ville;
     }
+
+    public RoleUser getRole() { return role; }
+
+    public void setRole(RoleUser role) { this.role = role; }
 
 }

@@ -5,5 +5,5 @@ import org.hibernate.Transaction;
 import com.entity.Article;
 
 public class ArticleDAO {
-    
+
 }

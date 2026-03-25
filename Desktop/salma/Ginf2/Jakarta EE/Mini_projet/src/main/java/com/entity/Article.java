@@ -1,6 +1,4 @@
 package com.entity;
-import com.entity.Categorie;
-import com.entity.User;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
