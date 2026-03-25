@@ -38,4 +38,8 @@ public class Categorie {
         this.nom = nom;
     }
 
+    public TypeArticle getType() { return type; }
+
+    public void setType(TypeArticle type) { this.type = type; }
+
 }
