@@ -34,7 +34,7 @@ public class LoginBean implements Serializable {
                     u.getMotdepasse().equalsIgnoreCase(passwordHashe)) {
 
                 user = u; // stocké en session automatiquement
-                return "index.xhtml?faces-redirect=true"; // redirection JSF
+                return "accueil.xhtml?faces-redirect=true"; // redirection JSF
             }
         }
 
@@ -58,4 +58,8 @@ public class LoginBean implements Serializable {
     public User getUser() { return user; }
 
     public String getMessage() { return message; }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

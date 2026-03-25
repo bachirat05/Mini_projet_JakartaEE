@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <title>SchoolSwap - Détails de l'article</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</h:head>
+
+<h:body class="bg-gray-50 font-sans text-gray-800">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{detailsBean.articleId}" />
+        <f:viewAction action="#{detailsBean.loadArticle}" />
+    </f:metadata>
+
+    <header class="h-20 bg-white shadow-sm flex items-center justify-between px-8 sticky top-0 z-50">
+        <div class="flex items-center">
+            <h1 class="text-2xl font-black text-blue-600 tracking-wider flex items-center cursor-pointer" onclick="window.location.href='accueil.xhtml'">
+                <i class="fa-solid fa-graduation-cap mr-2"></i>SchoolSwap
+            </h1>
+        </div>
+
+        <h:form class="relative w-96 hidden md:block">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <h:inputText value="#{accueilBean.motCle}" placeholder="Rechercher un article..." class="w-full bg-gray-50 text-gray-700 rounded-full py-2 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+            <h:commandButton action="#{accueilBean.filtrer}" style="display: none;" />
+        </h:form>
+        <div class="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity">
+            <span class="font-medium text-gray-600 text-sm hidden md:block">Fatima-Ezzahra</span>
+            <img src="https://ui-avatars.com/api/?name=Fatima+Ezzahra&amp;background=2563eb&amp;color=fff" alt="Profile" class="h-10 w-10 rounded-full border-2 border-blue-100" />
+        </div>
+    </header>
+
+    <main class="container mx-auto max-w-6xl p-6 lg:p-8 mt-4">
+
+        <nav class="flex text-sm text-gray-500 mb-6 font-medium">
+            <a href="accueil.xhtml" class="hover:text-blue-600 transition-colors">Accueil</a>
+            <span class="mx-2"><i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+            <a href="#" class="hover:text-blue-600 transition-colors">#{detailsBean.article.idCat.nom}</a>
+            <span class="mx-2"><i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+            <span class="text-gray-800">Détails</span>
+        </nav>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 md:p-8 flex flex-col lg:flex-row gap-10">
+
+            <div class="lg:w-1/2 relative">
+                <a href="accueil.xhtml" class="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm p-3 rounded-full text-gray-700 hover:text-blue-600 hover:bg-white shadow-md transition-all">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+
+                <div class="h-[450px] w-full bg-gray-100 rounded-2xl overflow-hidden relative border border-gray-100">
+                    <img src="https://placehold.co/800x600/f8fafc/64748b?text=Photo+de+l'article"
+                         alt="#{detailsBean.article.titre}"
+                         class="w-full h-full object-cover" />
+
+                    <div class="absolute bottom-4 left-4 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-lg uppercase tracking-wider">
+                        #{detailsBean.article.etat}
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:w-1/2 flex flex-col">
+
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-2">#{detailsBean.article.titre}</h2>
+
+                <div class="inline-block bg-blue-50 text-blue-600 font-bold px-3 py-1 rounded-md text-sm mb-6 w-max border border-blue-100">
+                    #{detailsBean.article.idCat.nom}
+                </div>
+
+                <div class="text-5xl font-black text-blue-600 mb-6">
+                    #{detailsBean.article.prix} <span class="text-xl font-bold text-gray-500">DH</span>
+                </div>
+
+                <div class="flex items-center text-sm text-gray-500 mb-8 pb-6 border-b border-gray-100">
+                    <div class="flex items-center mr-6">
+                        <i class="fa-regular fa-calendar mr-2 text-gray-400"></i>
+                        Publié le #{detailsBean.article.datePublication}
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        #{detailsBean.article.ville}
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 mb-8 border border-gray-100">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i> Description
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed text-sm">
+                        #{detailsBean.article.description}
+                    </p>
+                </div>
+
+                <div class="mt-auto">
+                    <h3 class="font-bold text-gray-800 mb-4">Auteur de l'annonce</h3>
+                    <div class="flex items-center justify-between bg-white border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://ui-avatars.com/api/?name=#{detailsBean.article.idUser.nom}+#{detailsBean.article.idUser.prenom}&amp;background=f1f5f9&amp;color=2563eb&amp;bold=true"
+                                 alt="Vendeur" class="h-12 w-12 rounded-full border border-gray-200" />
+                            <div>
+                                <h4 class="font-bold text-gray-900">#{detailsBean.article.idUser.prenom} #{detailsBean.article.idUser.nom}</h4>
+                                <p class="text-xs font-medium text-gray-500">Étudiant à #{detailsBean.article.idUser.ville}</p>
+                            </div>
+                        </div>
+
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-medium shadow-md shadow-blue-200 transition-all flex items-center transform hover:-translate-y-0.5">
+                            <i class="fa-regular fa-comment-dots mr-2 text-lg"></i> Contacter
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+</h:body>
+</html>

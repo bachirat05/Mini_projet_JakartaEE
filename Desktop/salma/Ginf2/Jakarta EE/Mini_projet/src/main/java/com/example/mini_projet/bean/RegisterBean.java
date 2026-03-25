@@ -6,10 +6,15 @@ import com.example.mini_projet.Util.HashUtil;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import jakarta.inject.Inject;
+
 
 @Named
 @RequestScoped
 public class RegisterBean implements Serializable {
+
+    @Inject
+    private LoginBean loginBean;
 
     private String nom;
     private String prenom;
@@ -44,7 +49,8 @@ public class RegisterBean implements Serializable {
         String result = UserDAO.saveUser(user);
 
         if ("succès".equals(result)) {
-            return "index.xhtml?faces-redirect=true";
+            loginBean.setUser(user); // STOCKAGE SESSION
+            return "accueil.xhtml?faces-redirect=true";
         } else {
             message = result;
             return null;
