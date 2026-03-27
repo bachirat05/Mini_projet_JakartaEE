@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<f:metadata>
+   <!-- Exécuté quand la page se charge -->
+   <f:viewAction action="#{annoncesBean.onPageGestionLoad}" />
+</f:metadata>
+
+<h:head>
+   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&amp;family=Mulish:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+   <h:outputStylesheet name="css/style2.css"/>
+   <meta charset="UTF-8"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <title>#{annoncesBean.modeEdition ? 'Modifier' : 'Ajouter'} une annonce – SchoolSwap</title>
+
+<!--   <link rel="preconnect" href="https://fonts.googleapis.com"/>-->
+<!--   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&amp;family=Mulish:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>-->
+
+   <h:outputStylesheet name="css/style.css" />
+</h:head>
+<h:body>
+   <ui:include src="./_sidebar.xhtml"/>
+   <div style="display:flex;min-height:100vh;width:100%;">
+
+      <!-- Sidebar -->
+<!--      <aside class="sidebar">-->
+<!--         <div class="sidebar-logo">School<span>Swap</span></div>-->
+<!--&lt;!&ndash;         <div class="sidebar-profile">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="avatar"><h:outputText value="#{authBean.utilisateurConnecte.nom.charAt(0)}" /></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>&ndash;&gt;-->
+<!--&lt;!&ndash;               <div class="profile-name"><h:outputText value="#{authBean.utilisateurConnecte.nom}"/></div>&ndash;&gt;-->
+<!--&lt;!&ndash;               <div class="profile-role">Étudiant</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;         </div>&ndash;&gt;-->
+<!--         <ul class="sidebar-nav">-->
+<!--            <li>-->
+<!--               <h:link outcome="index.xhtml">-->
+<!--                  <span class="nav-icon">🏠</span> Accueil-->
+<!--               </h:link>-->
+<!--            </li>-->
+<!--            <li class="active">-->
+<!--               <h:link outcome="mes-annonces.xhtml">-->
+<!--                  <span class="nav-icon">📋</span> Mes Annonces-->
+<!--               </h:link>-->
+<!--            </li>-->
+<!--            <li><h:link outcome="profil.xhtml"><span class="nav-icon">👤</span> Mon Profil</h:link></li>-->
+<!--            <li><h:link outcome="notifications.xhtml"><span class="nav-icon">🔔</span> Notifications</h:link></li>-->
+<!--            <li class="deconnexion">-->
+<!--               <h:form>-->
+<!--                  <h:commandLink action="#{loginBean.logout()}">-->
+<!--                     <span class="nav-icon">🚪</span> Déconnexion-->
+<!--                  </h:commandLink>-->
+<!--               </h:form>-->
+<!--            </li>-->
+<!--         </ul>-->
+<!--      </aside>-->
+
+      <!-- Main -->
+      <main class="main">
+
+         <!-- Breadcrumb -->
+         <nav class="breadcrumb">
+            <h:link outcome="mes-annonces.xhtml" value="Mes Annonces" />
+            <span>›</span>
+            <span>#{annoncesBean.modeEdition ? 'Modifier l\'annonce' : 'Nouvelle annonce'}</span>
+         </nav>
+
+         <!-- Header -->
+         <div class="page-header">
+            <h1 class="page-title">
+               #{annoncesBean.modeEdition ? 'Modifier l\'annonce' : 'Publier une annonce'}
+               <h:panelGroup rendered="#{annoncesBean.modeEdition}">
+                  <span class="mode-badge badge-edit">✏ Édition</span>
+               </h:panelGroup>
+               <h:panelGroup rendered="#{not annoncesBean.modeEdition}">
+                  <span class="mode-badge badge-new">+ Nouveau</span>
+               </h:panelGroup>
+            </h1>
+         </div>
+
+         <!-- Erreurs -->
+         <h:messages globalOnly="true" errorClass="flash-err" infoClass="flash-err" />
+
+         <!-- Formulaire -->
+         <div class="form-card">
+            <h:form>
+
+               <p class="section-label">Informations générales</p>
+
+               <!-- Titre -->
+               <div class="field">
+                  <label>Titre <span class="req">*</span> <span class="hint">ex : Livre de Maths Sup – Tome 1</span></label>
+                  <h:inputText value="#{annoncesBean.articleCourant.titre}" required="true" requiredMessage="Le titre est requis" maxlength="200" a:placeholder="Décrivez brièvement votre article" />
+               </div>
+
+               <!-- Catégorie + État -->
+               <div class="field-row">
+                  <!-- Catégorie -->
+                  <div class="field">
+                     <label>Catégorie <span class="req">*</span></label>
+                     <div class="select-wrap">
+                        <h:selectOneMenu value="#{annoncesBean.selectedCategoryId}" required="true" requiredMessage="Veuillez choisir une catégorie">
+                           <f:selectItem itemValue="" itemLabel="-- Choisir --" />
+                           <f:selectItems value="#{annoncesBean.categories}" var="cat" itemValue="#{cat.id}" itemLabel="#{cat.nom}" />
+                        </h:selectOneMenu>
+                     </div>
+                  </div>
+
+                  <!-- État -->
+                  <div class="field">
+                     <label>État <span class="req">*</span></label>
+                     <div class="select-wrap">
+                        <h:selectOneMenu value="#{annoncesBean.selectedEtatName}" required="true" requiredMessage="Veuillez choisir l'état">
+                           <f:selectItem itemValue="" itemLabel="-- Choisir --" />
+                           <f:selectItem itemValue="Neuf" itemLabel="Neuf" />
+                           <f:selectItem itemValue="Bon_Etat" itemLabel="Bon état" />
+                           <f:selectItem itemValue="Ancien_Usage" itemLabel="Usé" />
+                        </h:selectOneMenu>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Description -->
+               <div class="field">
+                  <label>Description <span class="req">*</span></label>
+                  <h:inputTextarea value="#{annoncesBean.articleCourant.description}" required="true" requiredMessage="La description est requise" a:placeholder="État précis, édition, défauts éventuels..." />
+               </div>
+
+               <p class="section-label" style="margin-top:1.5rem;">Prix &amp; Localisation</p>
+
+               <div class="field-row">
+                  <!-- Prix -->
+                  <div class="field">
+                     <label>Prix <span class="req">*</span> <span class="hint">DH</span></label>
+                     <!-- type="number" via pt:type -->
+                     <h:inputText value="#{annoncesBean.articleCourant.prix}" required="true" requiredMessage="Le prix est requis" a:type="number" a:step="0.01" a:min="0" />
+                  </div>
+
+                  <!-- Ville -->
+                  <div class="field">
+                     <label>Ville <span class="req">*</span></label>
+                     <h:inputText value="#{annoncesBean.articleCourant.ville}" required="true" requiredMessage="La ville est requise" a:placeholder="ex : Casablanca" />
+                  </div>
+               </div>
+
+               <!-- Actions -->
+               <div class="form-actions">
+                  <h:link outcome="mes-annonces.xhtml" class="btn-cancel" value="Annuler" />
+                  <h:commandButton action="#{annoncesBean.sauvegarder}" value="#{annoncesBean.modeEdition ? '💾 Enregistrer les modifications' : '🚀 Publier l\'annonce'}" class="btn-submit" />
+               </div>
+
+            </h:form>
+         </div>
+
+      </main>
+   </div>
+</h:body>
+</html>

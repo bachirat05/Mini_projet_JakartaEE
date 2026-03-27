@@ -183,7 +183,7 @@ public class ArticleDAO {
         return null;
     }
 
-    public List<Article> filtrefindbyuserid(Integer id, String motcle, String ville) {
+    public List<Article> filtrefindbyuserid(Integer id, String motcle, String ville, Integer categoryId) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
@@ -197,6 +197,9 @@ public class ArticleDAO {
             if (ville != null && !ville.isBlank())
                 hql.append(" AND a.ville = :ville");
 
+            if (categoryId != null)
+                hql.append(" AND a.idCat.id = :categoryId");
+
             hql.append(" ORDER BY a.datePublication DESC");
 
             var query = session.createQuery(hql.toString(), Article.class)
@@ -207,6 +210,9 @@ public class ArticleDAO {
 
             if (ville != null && !ville.isBlank())
                 query.setParameter("ville", ville);
+
+            if (categoryId != null)
+                query.setParameter("categoryId", categoryId);
 
             return query.getResultList();
 

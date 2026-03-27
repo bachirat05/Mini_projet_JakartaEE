@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <aside class="sidebar">
+
+      <!-- Logo -->
+      <div class="sidebar-logo">
+         <span class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+         School<span class="logo-accent">Swap</span>
+      </div>
+
+      <!-- Profile (optional — uncomment to enable) -->
+      <!--
+      <div class="sidebar-profile">
+          <div class="avatar">
+              <h:outputText value="#{authBean.utilisateurConnecte.nom.charAt(0)}" />
+          </div>
+          <div class="profile-info">
+              <div class="profile-name">
+                  <h:outputText value="#{authBean.utilisateurConnecte.nom}" />
+              </div>
+              <div class="profile-role">Étudiant</div>
+          </div>
+      </div>
+      -->
+
+      <!-- Navigation -->
+      <ul class="sidebar-nav">
+
+         <li class="#{request.servletPath.contains('accueil') or request.servletPath.contains('index') ? 'active' : ''}">
+            <h:link outcome="accueil.xhtml">
+               <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+               <span class="nav-label">Accueil</span>
+            </h:link>
+         </li>
+
+         <li class="#{request.servletPath.contains('mes-annonces') ? 'active' : ''}">
+            <h:link outcome="mes-annonces.xhtml">
+               <span class="nav-icon"><i class="fa-solid fa-list-check"></i></span>
+               <span class="nav-label">Mes Annonces</span>
+            </h:link>
+         </li>
+
+         <!-- Mon Profil (optional — uncomment to enable) -->
+         <!--
+         <li class="#{request.servletPath.contains('profil') ? 'active' : ''}">
+             <h:link outcome="profil.xhtml">
+                 <span class="nav-icon"><i class="fa-solid fa-user"></i></span>
+                 <span class="nav-label">Mon Profil</span>
+             </h:link>
+         </li>
+         -->
+
+         <!-- Notifications (optional — uncomment to enable) -->
+         <!--
+         <li class="#{request.servletPath.contains('notifications') ? 'active' : ''}">
+             <h:link outcome="notifications.xhtml">
+                 <span class="nav-icon"><i class="fa-solid fa-bell"></i></span>
+                 <span class="nav-label">Notifications</span>
+             </h:link>
+         </li>
+         -->
+
+         <!-- Déconnexion -->
+         <li class="deconnexion">
+            <h:form>
+               <h:commandLink action="#{loginBean.logout()}" styleClass="logout-link">
+                  <span class="nav-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                  <span class="nav-label">Déconnexion</span>
+               </h:commandLink>
+            </h:form>
+         </li>
+
+      </ul>
+   </aside>
+
+</ui:composition>
+</html>

@@ -33,8 +33,12 @@ public class LoginBean implements Serializable {
             if (u.getMail().equalsIgnoreCase(email) &&
                     u.getMotdepasse().equalsIgnoreCase(passwordHashe)) {
 
-                user = u; // stocké en session automatiquement
-                return "accueil.xhtml?faces-redirect=true"; // redirection JSF
+                user = u;// stocké en session automatiquement
+                // redirection JSF
+                if(u.getRole() == User.RoleUser.Admin){
+                    return "accueilAdmin.xhtml?faces-redirect=true";
+                }
+                return "accueil.xhtml?faces-redirect=true";
             }
         }
 
@@ -61,5 +65,15 @@ public class LoginBean implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    // Ces méthodes vont servir dans JSF ; rendered="#{loginBean.admin}
+    // C’est une convention JavaBeans : isXxx() → #{xxx}
+    public boolean isAdmin() {
+        return user != null && user.getRole() == User.RoleUser.Admin;
+    }
+
+    public boolean isEtudiant() {
+        return user != null && user.getRole() == User.RoleUser.Etudiant;
     }
 }
